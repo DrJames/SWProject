@@ -1,10 +1,12 @@
 package com.swproject.fi.swproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 
@@ -13,9 +15,8 @@ import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener{
-    private List<Integer> items;
-    private List<String> itemDesc;
     private ImageViewAdapter adapter;
+    private List<Device> deviceList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +24,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         GridView gridView = (GridView) findViewById(R.id.gridView);
-        items = new ArrayList<>();
-        itemDesc = new ArrayList<>();
-        adapter = new ImageViewAdapter(getApplicationContext(), items, itemDesc);
+        deviceList = new ArrayList<>();
+        adapter = new ImageViewAdapter(getApplicationContext(), R.layout.grid_item, deviceList);
 
         gridView.setAdapter(adapter);
+        gridView.setOnItemClickListener(deviceClickListener);
         gridView.invalidateViews();
 
         Button btnAdd = (Button) findViewById(R.id.btnAdd);
@@ -60,23 +61,28 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     private void addItem(){
-        int item = R.drawable.desktop;
-        int index = items.size() + 1;
-        items.add(item);
-        String description = "Network 1" + "\n" + "Device " + index;
-        itemDesc.add(description);
+        int index = deviceList.size() + 1;
+        deviceList.add(new Device(getResources().getDrawable(R.drawable.desktop), "name " + index,
+                "192.168.0." + index, "Network 1"));
         adapter.notifyDataSetChanged();
     }
 
     private void removeItem(){
-        if (items.size() != 0){
-            int last = items.size() - 1;
-            items.remove(last);
+        if (deviceList.size() != 0){
+            int last = deviceList.size() - 1;
+            deviceList.remove(last);
             adapter.notifyDataSetChanged();
         }
     }
 
-    @Override
+    private AdapterView.OnItemClickListener deviceClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            Intent activity = new Intent(getApplicationContext(), SomeActivity.class);
+            startActivity(activity);
+        }
+    };
+
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btnAdd:

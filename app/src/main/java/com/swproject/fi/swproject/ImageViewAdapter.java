@@ -15,21 +15,22 @@ import java.util.List;
  */
 public class ImageViewAdapter extends BaseAdapter{
     private Context context;
-    private List<Integer> itemList;
-    private List<String> itemDesc;
+    private int resourceId;
+    private List<Device> deviceList;
+    private ItemHolder holder;
 
-    public ImageViewAdapter(Context context, List<Integer> item, List<String> itemDesc) {
+    public ImageViewAdapter(Context context, int resourceId, List<Device> deviceList) {
         this.context = context;
-        this.itemList = item;
-        this.itemDesc = itemDesc;
+        this.resourceId = resourceId;
+        this.deviceList = deviceList;
     }
 
     public int getCount() {
-        return itemList.size();
+        return deviceList.size();
     }
 
     public Object getItem(int position) {
-        return itemList.get(position);
+        return deviceList.get(position);
     }
 
     public long getItemId(int position) {
@@ -37,21 +38,34 @@ public class ImageViewAdapter extends BaseAdapter{
     }
 
     public View getView(int i, View convertView, ViewGroup parent) {
-        View grid;
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         if (convertView == null) {
-            grid = new View(context);
-            grid = inflater.inflate(R.layout.grid_item, null);
-            ImageView imageView = (ImageView)grid.findViewById(R.id.grid_image);
-            imageView.setImageResource(itemList.get(i));
+            holder = new ItemHolder();
+            convertView = LayoutInflater.from(context)
+                    .inflate(R.layout.grid_item, parent, false);
 
-            TextView textView = (TextView) grid.findViewById(R.id.grid_text);
-            textView.setText(itemDesc.get(i));
+            holder.icon = (ImageView)convertView.findViewById(R.id.grid_image);
+            holder.name = (TextView) convertView.findViewById(R.id.gridName);
+            holder.ipAddress = (TextView) convertView.findViewById(R.id.gridIP);
+            holder.network = (TextView) convertView.findViewById(R.id.gridNet);
+            //holder.description.setText(itemDesc.get(i));
+            convertView.setTag(holder);
         } else {
-            grid = convertView;
+            holder = (ItemHolder) convertView.getTag();
         }
-        return grid;
+
+        Device device = (Device) getItem(i);
+        holder.icon.setImageDrawable(device.getIcon());
+        holder.name.setText(device.getName());
+        holder.ipAddress.setText(device.getIpAddress());
+        holder.network.setText(device.getNetwork());
+
+        return convertView;
+    }
+
+    public class ItemHolder{
+        ImageView icon;
+        TextView name;
+        TextView ipAddress;
+        TextView network;
     }
 }

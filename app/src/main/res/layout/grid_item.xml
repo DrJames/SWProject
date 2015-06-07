@@ -2,19 +2,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="5dp" >
+    android:padding="5dp"
+    android:weightSum="1"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/grid_image"
         android:layout_width="50dp"
-        android:layout_height="50dp">
+        android:layout_gravity="top"
+        android:layout_height="50dp"
+        android:layout_weight="0.25">
     </ImageView>
+
     <TextView
-        android:id="@+id/grid_text"
+        android:id="@+id/gridName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:textSize="9sp" >
+        android:layout_height="0dp"
+        android:textSize="9sp"
+        android:layout_weight="0.25">
+    </TextView>
+    <TextView
+        android:id="@+id/gridIP"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:textSize="9sp"
+        android:layout_weight="0.25">
+    </TextView>
+    <TextView
+        android:id="@+id/gridNet"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:textSize="9sp"
+        android:layout_gravity="left"
+        android:layout_weight="0.25">
     </TextView>
 
 </LinearLayout>
