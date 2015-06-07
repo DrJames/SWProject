@@ -54,10 +54,10 @@ public class ImageViewAdapter extends BaseAdapter{
         }
 
         Device device = (Device) getItem(i);
-        holder.icon.setImageDrawable(device.getIcon());
+        holder.icon.setImageResource(device.getIcon());
         holder.name.setText(device.getName());
         holder.ipAddress.setText(device.getIpAddress());
-        holder.network.setText(device.getNetwork());
+        holder.network.setText(device.getMAC());
 
         return convertView;
     }

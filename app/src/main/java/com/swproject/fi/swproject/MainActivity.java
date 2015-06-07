@@ -62,8 +62,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     private void addItem(){
         int index = deviceList.size() + 1;
-        deviceList.add(new Device(getResources().getDrawable(R.drawable.desktop), "name " + index,
-                "192.168.0." + index, "Network 1"));
+        deviceList.add(new Device(R.drawable.desktop, "Device " + index,
+                "192.168.0." + index, "C8:F7:33:06:64:2C"));
         adapter.notifyDataSetChanged();
     }
 

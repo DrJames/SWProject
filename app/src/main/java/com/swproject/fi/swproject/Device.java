@@ -1,28 +1,26 @@
 package com.swproject.fi.swproject;
 
-import android.graphics.drawable.Drawable;
-
 /**
  * Created by alex on 7.6.2015.
  */
 public class Device {
-    private Drawable icon;
+    private Integer icon;
     private String ipAddress;
-    private String network;
+    private String macAddress;
     private String name;
 
-    public Device(Drawable icon, String name, String ipAddress, String network){
+    public Device(Integer icon, String name, String ipAddress, String macAddress){
         this.icon = icon;
         this.name = name;
         this.ipAddress = ipAddress;
-        this.network = network;
+        this.macAddress = macAddress;
     }
 
-    public Drawable getIcon(){
+    public Integer getIcon(){
         return icon;
     }
 
-    public void setIcon(Drawable icon){
+    public void setIcon(Integer icon){
         this.icon = icon;
     }
 
@@ -42,11 +40,11 @@ public class Device {
         this.name = name;
     }
 
-    public String getNetwork(){
-        return network;
+    public String getMAC(){
+        return macAddress;
     }
 
-    public void setNetwork(String network){
-        this.network = network;
+    public void setMAC(String network){
+        this.macAddress = network;
     }
 }
