@@ -53,6 +53,7 @@ public class ImageViewAdapter extends BaseAdapter{
             holder = (ItemHolder) convertView.getTag();
         }
 
+
         Device device = (Device) getItem(i);
         holder.icon.setImageResource(device.getIcon());
         holder.name.setText(device.getName());

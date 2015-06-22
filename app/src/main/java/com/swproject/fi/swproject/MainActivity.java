@@ -1,8 +1,13 @@
 package com.swproject.fi.swproject;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -160,6 +165,31 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         deviceList.add(new Device(R.drawable.desktop, "Device " + deviceIndex,
                 "192.168.0." + deviceIndex, "C8:F7:33:06:64:2C"));
         adapter.notifyDataSetChanged();
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.notification_icon)
+                        .setContentTitle("New device joined in your network")
+                        .setContentText("device  "+ deviceIndex + "  added in");
+
+        Intent resultIntent = new Intent(this, MainActivity.class);
+
+        // The stack builder object will contain an artificial back stack for the
+        // started Activity.
+        // This ensures that navigating backward from the Activity leads out of
+        // your application to the Home screen.
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        // Adds the back stack for the Intent (but not the Intent itself)
+        stackBuilder.addParentStack(MainActivity.class);
+        // Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        mBuilder.setContentIntent(resultPendingIntent);
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(2, mBuilder.build());
 
     }
 
@@ -168,6 +198,33 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             int last = deviceList.size() - 1;
             deviceList.remove(last);
             adapter.notifyDataSetChanged();
+
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(this)
+                            .setSmallIcon(R.drawable.notification_icon)
+                            .setContentTitle("Device moved out of your network")
+                            .setContentText("device  "+ deviceIndex + "  left");
+
+            Intent resultIntent = new Intent(this, MainActivity.class);
+
+            // The stack builder object will contain an artificial back stack for the
+            // started Activity.
+            // This ensures that navigating backward from the Activity leads out of
+            // your application to the Home screen.
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+            // Adds the back stack for the Intent (but not the Intent itself)
+            stackBuilder.addParentStack(MainActivity.class);
+            // Adds the Intent that starts the Activity to the top of the stack
+            stackBuilder.addNextIntent(resultIntent);
+            PendingIntent resultPendingIntent =
+                    stackBuilder.getPendingIntent(
+                            0,
+                            PendingIntent.FLAG_UPDATE_CURRENT
+                    );
+            mBuilder.setContentIntent(resultPendingIntent);
+            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            mNotificationManager.notify(2, mBuilder.build());
+
         }
     }
 
