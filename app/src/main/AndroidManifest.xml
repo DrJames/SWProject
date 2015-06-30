@@ -20,6 +20,18 @@
             android:name=".SomeActivity"
             android:label="@string/title_activity_" >
         </activity>
+        <activity
+            android:name=".ReportActivity"
+            android:label="@string/title_activity_report" >
+        </activity>
+        <activity
+            android:name=".DataActivity"
+            android:label="@string/title_activity_data" >
+        </activity>
+        <activity
+            android:name=".Data"
+            android:label="@string/title_activity_data" >
+        </activity>
     </application>
 
 </manifest>
