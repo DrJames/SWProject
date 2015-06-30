@@ -1,12 +1,17 @@
 package com.swproject.fi.swproject;
 
+import android.app.Service;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class ReportActivity extends ActionBarActivity {
@@ -16,10 +21,9 @@ public class ReportActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_report);
-        Button btn_showConnections;
-        btn_showConnections = (Button) findViewById(R.id.btn_showConnections);
-        btn_showConnections.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.activity_);
+        Button btnReport = (Button) findViewById(R.id.btn_Report);
+        btnReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), Data.class);
@@ -27,6 +31,39 @@ public class ReportActivity extends ActionBarActivity {
             }
         });
 
+        String name = getIntent().getExtras().getString("hostName");
+        String mac = getIntent().getExtras().getString("macAddress");
+        final int index = getIntent().getExtras().getInt("index");
+
+        TextView txtHostName = (TextView) findViewById(R.id.editHostName);
+        TextView txtMac = (TextView) findViewById(R.id.editMac);
+
+        final EditText editName = (EditText) findViewById(R.id.editName);
+        final InputMethodManager imm = (InputMethodManager)this.getSystemService(Service.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(editName, InputMethodManager.SHOW_IMPLICIT);
+
+
+        Button btnSetName = (Button) findViewById(R.id.btn_setName);
+        btnSetName.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                String newName = editName.getText().toString();
+                Device device = MainActivity.deviceList.get(index);
+                device.setName(newName);
+                Toast.makeText(getApplicationContext(), "Name Has been Changed", Toast.LENGTH_SHORT).show();
+                imm.hideSoftInputFromWindow(editName.getWindowToken(), 0);
+                editName.clearFocus();
+            }
+        });
+
+        editName.setText(name);
+        txtHostName.setText(name);
+        txtMac.setText(mac);
+    }
+
+    public void startDataActivity(){
+        Intent intent = new Intent(this, Data.class);
+        startActivity(intent);
     }
 
     @Override

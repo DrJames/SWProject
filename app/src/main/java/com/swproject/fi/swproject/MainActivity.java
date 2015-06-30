@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,13 +19,12 @@ import android.widget.GridView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener{
     private ImageViewAdapter adapter;
-    private List<Device> deviceList;
-    private int deviceIndex = 0;
+    private int deviceIndex = -1;
+    public static List<Device> deviceList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         GridView gridView = (GridView) findViewById(R.id.gridView);
         //deviceList = Collections.synchronizedList(new ArrayList<Device>());
-        deviceList = new ArrayList<Device>();
+        deviceList = new ArrayList<>();
         adapter = new ImageViewAdapter(getApplicationContext(), R.layout.grid_item, deviceList);
 
         gridView.setAdapter(adapter);
@@ -48,7 +48,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         //this.runOnUiThread();
 
-        new Thread(new Runnable() {
+        /*new Thread(new Runnable() {
             public void run() {
                 while (true)
                 {
@@ -132,7 +132,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                     }
                 }
             }
-        }).start();
+        }).start();*/
 
     }
 
@@ -158,12 +158,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
-    private void addItem(){
-        int index = deviceList.size() + 1;
-		deviceIndex++;
-        deviceList.add(new Device(R.drawable.desktop, "Device " + deviceIndex,
-                "192.168.0." + deviceIndex, "C8:F7:33:06:64:2C"));
+    private void addItem(String name, String ip, String mac){
+        deviceList.add(new Device(R.drawable.desktop, name, ip, mac));
         adapter.notifyDataSetChanged();
+        ++deviceIndex;
         onNotify();
     }
 
@@ -174,13 +172,26 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         editor.putInt("notificationId", notificationId);
         editor.commit();
 
-        Intent intent = new Intent(this, SomeActivity.class);
+        Intent intent = new Intent(this, ReportActivity.class);
+        Bundle extras = new Bundle();
+        String name = deviceList.get(deviceIndex).getName();
+        String ip = deviceList.get(deviceIndex).getIpAddress();
+        String mac = deviceList.get(deviceIndex).getMAC();
+        Log.e("+++++++++", name);
+        Log.e("+++++++++", "" + deviceIndex);
+        extras.putString("hostName", name);
+        extras.putString("ipAddress", ip);
+        extras.putString("macAddress", mac);
+        extras.putInt("index", deviceIndex);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction("ACTION_" + notificationId);
+        intent.putExtras(extras);
         intent.putExtra("notificationId",notificationId);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Notification.Builder noti = new Notification.Builder(this)
-                .setContentTitle("New device")
+                .setContentTitle("New device " + name)
                 .setSubText("A new device has been added")
                 .setSmallIcon(R.drawable.notification_icon)
                 .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),
@@ -197,13 +208,29 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             int last = deviceList.size() - 1;
             deviceList.remove(last);
             adapter.notifyDataSetChanged();
+            deviceIndex--;
         }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        adapter.notifyDataSetChanged();
     }
 
     private AdapterView.OnItemClickListener deviceClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            Intent activity = new Intent(getApplicationContext(), SomeActivity.class);
+            String name = deviceList.get(i).getName();
+            String ip = deviceList.get(i).getIpAddress();
+            String mac = deviceList.get(i).getMAC();
+            Intent activity = new Intent(getApplicationContext(), ReportActivity.class);
+            Bundle extras = new Bundle();
+            extras.putString("hostName", name);
+            extras.putString("ipAddress", ip);
+            extras.putString("macAddress", mac);
+            extras.putInt("index", i);
+            activity.putExtras(extras);
             startActivity(activity);
         }
     };
@@ -211,7 +238,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btnAdd:
-                addItem();
+                int index = deviceList.size() + 1;
+                String name = "Device " + index;
+                String ip = "192.168.0." + ++index;
+                String mac = "C8:F7:33:06:64:2C";
+                addItem(name, ip, mac);
                 break;
             case R.id.btnRemove:
                 removeItem();
