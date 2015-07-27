@@ -15,7 +15,6 @@ import com.androidplot.xy.PointLabelFormatter;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
-import com.github.mikephil.charting.charts.LineChart;
 
 import java.text.FieldPosition;
 import java.text.Format;

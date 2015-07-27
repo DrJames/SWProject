@@ -42,11 +42,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         Button btnAdd = (Button) findViewById(R.id.btnAdd);
         Button btnRemove = (Button) findViewById(R.id.btnRemove);
-        Button btnDevicesCount = (Button) findViewById(R.id.btnDeviceCount);
 
         btnAdd.setOnClickListener(this);
         btnRemove.setOnClickListener(this);
-        btnDevicesCount.setOnClickListener(this);
 
 
 
@@ -258,9 +256,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 break;
             case R.id.btnRemove:
                 removeItem();
-                break;
-            case R.id.btnDeviceCount:
-                this.showDeviceCountChart();
                 break;
         }
     }

@@ -7,4 +7,5 @@
     <string name="title_activity_report">ReportActivity</string>
     <string name="title_activity_data">DataActivity</string>
     <string name="title_devices_count_activity">Devices Count</string>
+    <string name="title_activity_summery">SummeryActivity</string>
 </resources>

@@ -32,6 +32,10 @@
             android:name=".DevicesByTimeChartActivity"
             android:label="@string/title_devices_count_activity" >
         </activity>
+        <activity
+            android:name=".SummeryActivity"
+            android:label="@string/title_activity_summery" >
+        </activity>
     </application>
 
 </manifest>

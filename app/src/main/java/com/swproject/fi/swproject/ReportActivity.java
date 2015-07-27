@@ -28,7 +28,7 @@ public class ReportActivity extends ActionBarActivity {
         btnReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Data.class);
+                Intent intent = new Intent(getApplicationContext(), SummeryActivity.class);
                 startActivity(intent);
             }
         });
