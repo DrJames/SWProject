@@ -6,4 +6,5 @@
     <string name="title_activity_">Activity</string>
     <string name="title_activity_report">ReportActivity</string>
     <string name="title_activity_data">DataActivity</string>
+    <string name="title_devices_count_activity">Devices Count</string>
 </resources>

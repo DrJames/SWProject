@@ -2,7 +2,9 @@ package com.swproject.fi.swproject;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -13,6 +15,7 @@ import com.androidplot.xy.PointLabelFormatter;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
+import com.github.mikephil.charting.charts.LineChart;
 
 import java.text.FieldPosition;
 import java.text.Format;
@@ -130,6 +133,7 @@ public class Data extends ActionBarActivity {
             // make our bars a little thicker than the default so they can be seen better:
             barRenderer.setBarWidth(25);
         }
+
     }
 
     private Number[] dataGenerator(){

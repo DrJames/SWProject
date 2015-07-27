@@ -42,9 +42,13 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         Button btnAdd = (Button) findViewById(R.id.btnAdd);
         Button btnRemove = (Button) findViewById(R.id.btnRemove);
+        Button btnDevicesCount = (Button) findViewById(R.id.btnDeviceCount);
 
         btnAdd.setOnClickListener(this);
         btnRemove.setOnClickListener(this);
+        btnDevicesCount.setOnClickListener(this);
+
+
 
         //this.runOnUiThread();
 
@@ -212,6 +216,13 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         }
     }
 
+    private void showDeviceCountChart()
+    {
+        Log.v("thangld", "begin chart");
+        Intent activity = new Intent(getApplicationContext(), DevicesByTimeChartActivity.class);
+        startActivity(activity);
+    }
+
     @Override
     public void onResume(){
         super.onResume();
@@ -236,6 +247,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     };
 
     public void onClick(View view) {
+        Log.v("thangld", String.valueOf(view.getId()));
         switch (view.getId()){
             case R.id.btnAdd:
                 int index = deviceList.size() + 1;
@@ -246,6 +258,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 break;
             case R.id.btnRemove:
                 removeItem();
+                break;
+            case R.id.btnDeviceCount:
+                this.showDeviceCountChart();
                 break;
         }
     }

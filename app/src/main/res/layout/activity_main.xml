@@ -19,7 +19,15 @@
         android:text="remove"
         android:id="@+id/btnRemove"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Device Count"
+        android:id="@+id/btnDeviceCount"
+        android:layout_above="@+id/gridView"
+        android:layout_alignEnd="@+id/gridView" />
 
     <GridView
         android:layout_width="wrap_content"

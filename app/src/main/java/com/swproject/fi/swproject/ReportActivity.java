@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.LineChart;
+
 
 public class ReportActivity extends ActionBarActivity {
 
@@ -30,6 +32,9 @@ public class ReportActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+
+        LineChart chart = null;
+
 
         String name = getIntent().getExtras().getString("hostName");
         String mac = getIntent().getExtras().getString("macAddress");

@@ -28,6 +28,10 @@
             android:name=".Data"
             android:label="@string/title_activity_data" >
         </activity>
+        <activity
+            android:name=".DevicesByTimeChartActivity"
+            android:label="@string/title_devices_count_activity" >
+        </activity>
     </application>
 
 </manifest>
